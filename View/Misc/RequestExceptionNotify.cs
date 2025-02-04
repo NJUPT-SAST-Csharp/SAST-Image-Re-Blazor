@@ -4,15 +4,20 @@ using Masa.Blazor.Presets;
 
 namespace View.Misc;
 
-internal sealed class RequestExceptionNotify(GlobalSnackbarsRef snackbars) : IRequestExceptionNotify
+internal sealed class RequestExceptionNotify(
+    GlobalSnackbarsRef snackbars,
+    IServiceProvider services
+) : IRequestExceptionNotify
 {
     public void Notify(string message)
     {
+        using var scope = services.CreateScope();
+
         snackbars.Ref.EnqueueSnackbar(
             new SnackbarOptions()
             {
                 Type = AlertTypes.Error,
-                Content = message,
+                Content = scope.ServiceProvider.GetRequiredService<I18n>().T(message),
                 Closeable = true,
                 Timeout = 5000,
             }

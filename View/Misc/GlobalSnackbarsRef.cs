@@ -5,7 +5,7 @@ namespace View.Misc;
 
 public sealed class GlobalSnackbarsRef
 {
-    internal PEnqueuedSnackbars Ref { get; set; } = null!;
+    internal PEnqueuedSnackbars Ref { get; set; } = new() { };
 }
 
 internal static class GlobalSnackbarsRefExtensions

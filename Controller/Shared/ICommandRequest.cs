@@ -5,31 +5,22 @@ namespace Controller.Shared;
 
 public interface ICommandSender
 {
-    public Task CommandAsync<TCommand>(TCommand request)
-        where TCommand : ICommandRequest;
-    public Task<TResponse> CommandAsync<TResponse>(ICommandRequest<TResponse> request);
+    public Task<TResponse> CommandAsync<TResponse>(ICommandRequest<TResponse> request)
+        where TResponse : IResult;
 }
 
-public interface ICommandRequest : IRequest { }
-
-public interface ICommandRequest<out TResponse> : IRequest<TResponse> { }
-
-internal interface ICommandRequestHandler<in TRequest> : IRequestHandler<TRequest>
-    where TRequest : ICommandRequest { }
+public interface ICommandRequest<out TResponse> : IRequest<TResponse>
+    where TResponse : IResult { }
 
 internal interface ICommandRequestHandler<in TRequest, TResponse>
     : IRequestHandler<TRequest, TResponse>
-    where TRequest : ICommandRequest<TResponse> { }
+    where TRequest : ICommandRequest<TResponse>
+    where TResponse : IResult { }
 
 internal sealed class InnerCommandSender(IMediator mediator) : ICommandSender
 {
-    public Task CommandAsync<TCommand>(TCommand request)
-        where TCommand : ICommandRequest
-    {
-        return mediator.Send(request);
-    }
-
     public Task<TResponse> CommandAsync<TResponse>(ICommandRequest<TResponse> request)
+        where TResponse : IResult
     {
         return mediator.Send(request);
     }

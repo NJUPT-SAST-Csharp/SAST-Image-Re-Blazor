@@ -20,7 +20,7 @@ builder
     .AddCascadingAuthenticationState()
     .AddSingleton<AuthenticationStateProvider, Authenticator>();
 
-builder.Services.AddMediatRControllers().AddHttpClients("http://localhost:5265/api/");
+builder.Services.AddMediatRControllers().AddHttpClients("http://localhost:5265/api");
 
 builder.Services.AddSnackbarsService().AddRequestExceptionNotify();
 

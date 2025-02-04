@@ -1,17 +1,22 @@
 using System.Security.Claims;
 using Blazored.LocalStorage;
+using Controller.Exceptions;
 using Controller.Shared;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Model.Account;
 
 namespace Controller.Account;
 
-public readonly record struct AuthCommandResult(ClaimsPrincipal User, bool IsChanged)
+public readonly record struct AuthCommandResult(
+    ClaimsPrincipal User,
+    bool IsChanged,
+    bool IsSuccessful = true
+) : IResult
 {
     public AuthCommandResult(string jwtTokenString, bool isChanged)
         : this(CreateClaimsPrincipal(jwtTokenString), isChanged) { }
 
-    public static readonly AuthCommandResult Failed = new(new ClaimsPrincipal(), true);
+    public static readonly AuthCommandResult Failed = new(new ClaimsPrincipal(), true, false);
 
     private static ClaimsPrincipal CreateClaimsPrincipal(string jwtTokenString)
     {
@@ -43,14 +48,10 @@ internal sealed class AuthRequestHandler(ISyncLocalStorageService localStorage, 
 
             if (state.ExpiresAt < DateTime.UtcNow)
             {
-                var response = await account.RefreshTokenAsync(
-                    new(state.RefreshToken),
-                    cancellationToken
-                );
-                if (response is null || response.IsSuccessful == false)
-                {
-                    return AuthCommandResult.Failed;
-                }
+                var response =
+                    await account.RefreshTokenAsync(new(state.RefreshToken), cancellationToken)
+                    ?? throw new ResponseNullOrEmptyException();
+
                 localStorage.SetItem(LocalStorageKey, response.Content);
                 return new AuthCommandResult(response.Content.AccessToken, false);
             }

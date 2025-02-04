@@ -12,7 +12,7 @@ public sealed class Authenticator(ICommandSender commander) : AuthenticationStat
     {
         AuthCommand command = new();
         var result = await commander.CommandAsync(command);
-        AuthenticationState state = new(result.User);
+        AuthenticationState state = new(result.User ?? new ClaimsPrincipal());
         return state;
     }
 }
