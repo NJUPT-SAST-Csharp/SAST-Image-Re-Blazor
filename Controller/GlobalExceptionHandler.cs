@@ -4,7 +4,7 @@ using MediatR.Pipeline;
 
 namespace Controller;
 
-public sealed class GlobalExceptionHandler<TRequest, TResponse>
+public sealed class GlobalExceptionHandler<TRequest, TResponse>(IRequestExceptionNotify notify)
     : IRequestExceptionHandler<TRequest, TResponse, Exception>
     where TRequest : IBaseRequest
 {
@@ -15,6 +15,7 @@ public sealed class GlobalExceptionHandler<TRequest, TResponse>
         CancellationToken cancellationToken
     )
     {
-        throw new NotImplementedException();
+        notify.Notify(exception.Message);
+        return Task.CompletedTask;
     }
 }

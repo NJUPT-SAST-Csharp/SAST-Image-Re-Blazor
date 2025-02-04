@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿@using Controller
+@using View.Misc
+@inherits LayoutComponentBase
 
 <MApp>
     <MNavigationDrawer App @bind-Value="drawer">
@@ -11,6 +13,7 @@
     </MAppBar>
 
     <MMain>
+        <PEnqueuedSnackbars Position="@SnackPosition.TopRight" @ref="Snackbars.Ref"></PEnqueuedSnackbars>
         <MContainer Fluid Id="main-content">
             @Body
         </MContainer>
@@ -19,7 +22,8 @@
 </MApp>
 
 
-@code{
-    
+@code {
+    [Inject]
+    public GlobalSnackbarsRef Snackbars { get; set; } = null!;
     private bool? drawer;
 }

@@ -1,5 +1,11 @@
 ﻿@page "/login"
 
 @code {
+    [Inject]
+    public I18n I18N { get; set; } = null!;
 
+    [Inject]
+    public NavigationManager Nav { get; set; } = null!;
+
+    private bool loading = false;
 }

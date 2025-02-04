@@ -22,6 +22,8 @@ builder
 
 builder.Services.AddMediatRControllers().AddHttpClients("http://localhost:5265/api/");
 
+builder.Services.AddSnackbarsService().AddRequestExceptionNotify();
+
 builder.Services.AddBlazoredLocalStorageAsSingleton().AddBlazoredSessionStorageAsSingleton();
 
 await builder
