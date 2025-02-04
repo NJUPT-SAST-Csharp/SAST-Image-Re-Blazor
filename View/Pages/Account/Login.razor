@@ -10,6 +10,25 @@
     private bool loading = false;
     private LoginCommand loginCommand = new();
 
+    protected override void OnInitialized()
+    {
+        usernameValidators = [
+        s => s.Length >= 2 && s.Length <= 16 ? true : I18n.T("Username length should be 2 - 16"),
+s => s.IsValid() ? true : I18n.T("Username can contain only digits, letters, and underscores"),
+];
+
+        passwordValidators = [
+        s => s.Length >= 6 && s.Length <= 20 ? true : I18n.T("Password length should be 6 - 20"),
+s => s.IsValid() ? true : I18n.T("Password can contain only digits, letters, and underscores"),
+];
+
+    }
+
+    private Func<string, StringBoolean>[] usernameValidators = [];
+
+    private Func<string, StringBoolean>[] passwordValidators = [];
+
+
 
     async Task Submit()
     {
@@ -34,10 +53,10 @@
             <MForm Disabled="@loading" OnValidSubmit="Submit">
                 <MCardTitle>@I18n.T("Login")</MCardTitle>
                 <MCardText>
-                    <MTextField Required Counter="16" maxlength="16" ValidateOnBlur Label="@I18n.T("Username")"
-                        @bind-Value="loginCommand.Username" />
-                    <MTextField Required Counter="20" maxlength="20" ValidateOnBlur Label="@I18n.T("Password")"
-                        @bind-Value="loginCommand.Password" Type="password" />
+                    <MTextField Required Counter="16" maxlength="16" ValidateOnBlur Rules="usernameValidators"
+                        Label="@I18n.T("Username")" @bind-Value="loginCommand.Username" />
+                    <MTextField Required Counter="20" maxlength="20" ValidateOnBlur Rules="passwordValidators"
+                        Label="@I18n.T("Password")" @bind-Value="loginCommand.Password" Type="password" />
                 </MCardText>
                 <MCardActions>
                     <MButton Type="submit" Text Color="teal accent-4">
