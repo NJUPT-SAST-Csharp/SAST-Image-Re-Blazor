@@ -21,12 +21,6 @@ public static class IServiceCollectionModelExtensions
         ContentSerializer = new SystemTextJsonContentSerializer(options),
     };
 
-    public static IServiceCollection AddBearerTokenProvider<T>(this IServiceCollection services)
-        where T : class, IAuthTokenProvider
-    {
-        return services.AddSingleton<IAuthTokenProvider, T>();
-    }
-
     public static IServiceCollection AddHttpClients(
         this IServiceCollection services,
         string baseAddress

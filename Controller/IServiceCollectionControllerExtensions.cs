@@ -1,8 +1,7 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using Blazored.LocalStorage;
+﻿using Blazored.LocalStorage;
 using Blazored.SessionStorage;
 using Controller.Shared;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Model;
 
@@ -23,8 +22,20 @@ public static class IServiceCollectionControllerExtensions
         services.AddSingleton<IQuerySender, InnerQuerySender>();
         services.AddSingleton<IAuthTokenProvider, AuthTokenProvider>();
 
+        services.AddValidatorsFromAssembly(
+            typeof(IServiceCollectionControllerExtensions).Assembly,
+            includeInternalTypes: true
+        );
+
         services.AddBlazoredLocalStorageAsSingleton().AddBlazoredSessionStorageAsSingleton();
 
+        return services;
+    }
+
+    public static IServiceCollection AddControllerLayerI18nText<T>(this IServiceCollection services)
+        where T : class, II18nText
+    {
+        services.AddScoped<II18nText, T>();
         return services;
     }
 }

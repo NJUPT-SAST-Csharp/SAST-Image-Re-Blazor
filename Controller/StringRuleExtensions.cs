@@ -1,6 +1,6 @@
 using System;
 
-namespace View.Misc;
+namespace Controller;
 
 public static class StringRuleExtentions
 {

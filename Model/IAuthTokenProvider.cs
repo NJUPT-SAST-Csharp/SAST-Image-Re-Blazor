@@ -2,7 +2,7 @@ using System;
 
 namespace Model;
 
-public interface IAuthTokenProvider
+internal interface IAuthTokenProvider
 {
     public Task<string?> GetAsync();
 }

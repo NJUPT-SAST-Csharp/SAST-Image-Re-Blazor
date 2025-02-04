@@ -3,7 +3,7 @@ using Refit;
 
 namespace Model.Account;
 
-public interface IAccountAPI
+internal interface IAccountAPI
 {
     [Post("/account/login")]
     public Task<IApiResponse<JwtToken>> LoginAsync(

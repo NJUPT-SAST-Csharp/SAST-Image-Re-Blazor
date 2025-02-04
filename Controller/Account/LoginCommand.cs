@@ -1,7 +1,10 @@
 using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Controller.Exceptions;
 using Controller.Shared;
+using FluentValidation;
 using Model.Account;
 using Refit;
 
@@ -16,6 +19,22 @@ public sealed class LoginCommand : ICommandRequest<LoginCommandResult>
     public string Password { get; set; } = string.Empty;
 
     internal LoginRequest ToRequest() => new(Username, Password);
+}
+
+internal sealed class LoginCommandValidator : AbstractValidator<LoginCommand>
+{
+    public LoginCommandValidator(II18nText i18n)
+    {
+        RuleFor(x => x.Username)
+            .Length(2, 16)
+            .Must(x => x.IsValid())
+            .WithMessage(i18n.T("Username can contain only digits, letters, and underscores"));
+
+        RuleFor(x => x.Password)
+            .Length(6, 20)
+            .Must(x => x.IsValid())
+            .WithMessage(i18n.T("Password can contain only digits, letters, and underscores"));
+    }
 }
 
 internal sealed class LoginCommandHandler(IAccountAPI account, ICommandSender sender)

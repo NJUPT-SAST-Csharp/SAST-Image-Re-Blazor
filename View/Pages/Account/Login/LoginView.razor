@@ -1,0 +1,39 @@
+﻿@page "/login"
+@using Controller.Account
+@using View.Misc
+
+<div class="frame">
+    <MCard MaxWidth="500" MinWidth="320" Loading="@loading" Tile>
+        <ProgressContent>
+            <MProgressLinear Color="deep-purple" Height="10" Indeterminate />
+        </ProgressContent>
+        <ChildContent>
+            <MForm Disabled="@loading" OnValidSubmit="Submit" EnableI18n Model="loginCommand">
+                <MCardTitle>@I18n.T("Login")</MCardTitle>
+                <MCardText>
+                    <MTextField Required Counter="16" maxlength="16" ValidateOnBlur Label="@I18n.T("Username")"
+                        @bind-Value="loginCommand.Username" />
+                    <MTextField Required Counter="20" maxlength="20" ValidateOnBlur Label="@I18n.T("Password")"
+                        @bind-Value="loginCommand.Password" Type="password" />
+                </MCardText>
+                <MCardActions>
+                    <MButton Type="submit" Text Color="teal accent-4">
+                        <MIcon>mdi-check-outline</MIcon>
+                    </MButton>
+                    <MButton Text OnClick="@(() => Nav.Replace("/register"))">
+                        <MIcon>mdi-account-plus-outline</MIcon>
+                    </MButton>
+                </MCardActions>
+            </MForm>
+        </ChildContent>
+    </MCard>
+</div>
+
+<style>
+    .frame {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>

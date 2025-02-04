@@ -1,6 +1,7 @@
 using Blazored.LocalStorage;
 using Blazored.SessionStorage;
 using Controller;
+using Masa.Blazor;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -20,8 +21,8 @@ builder
     .AddCascadingAuthenticationState()
     .AddSingleton<AuthenticationStateProvider, Authenticator>();
 
-builder.Services.AddMediatRControllers().AddHttpClients("http://localhost:5265/api");
-
+builder.Services.AddMediatRControllers().AddControllerLayerI18nText<I18nTextAdapter>();
+builder.Services.AddHttpClients("http://localhost:5265/api");
 builder.Services.AddSnackbarsService().AddRequestExceptionNotify();
 
 await builder

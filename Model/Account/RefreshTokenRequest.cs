@@ -2,4 +2,4 @@ using System;
 
 namespace Model.Account;
 
-public readonly record struct RefreshTokenRequest(string RefreshToken) { }
+internal readonly record struct RefreshTokenRequest(string RefreshToken) { }
