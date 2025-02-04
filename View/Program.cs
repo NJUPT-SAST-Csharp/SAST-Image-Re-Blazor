@@ -24,8 +24,6 @@ builder.Services.AddMediatRControllers().AddHttpClients("http://localhost:5265/a
 
 builder.Services.AddSnackbarsService().AddRequestExceptionNotify();
 
-builder.Services.AddBlazoredLocalStorageAsSingleton().AddBlazoredSessionStorageAsSingleton();
-
 await builder
     .Services.AddMasaBlazor()
     .AddI18nForWasmAsync($"{builder.HostEnvironment.BaseAddress}/i18n");

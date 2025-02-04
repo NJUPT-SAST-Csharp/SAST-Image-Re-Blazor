@@ -21,6 +21,12 @@ public static class IServiceCollectionModelExtensions
         ContentSerializer = new SystemTextJsonContentSerializer(options),
     };
 
+    public static IServiceCollection AddBearerTokenProvider<T>(this IServiceCollection services)
+        where T : class, IAuthTokenProvider
+    {
+        return services.AddSingleton<IAuthTokenProvider, T>();
+    }
+
     public static IServiceCollection AddHttpClients(
         this IServiceCollection services,
         string baseAddress
@@ -37,12 +43,31 @@ public static class IServiceCollectionModelExtensions
         {
             services
                 .AddRefitClient(types[i], settings)
+                .ConfigurePrimaryHttpMessageHandler<AuthenticatedHttpClientHandler>()
                 .ConfigureHttpClient(client =>
                 {
                     client.BaseAddress = new(baseAddress);
                 });
         }
 
+        services.AddSingleton<AuthenticatedHttpClientHandler>();
+
         return services;
+    }
+}
+
+file sealed class AuthenticatedHttpClientHandler(IAuthTokenProvider auth) : HttpClientHandler
+{
+    protected override async Task<HttpResponseMessage> SendAsync(
+        HttpRequestMessage request,
+        CancellationToken cancellationToken
+    )
+    {
+        string? token = await auth.GetAsync();
+
+        if (token is not null)
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+        return await base.SendAsync(request, cancellationToken);
     }
 }

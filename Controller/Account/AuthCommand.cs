@@ -31,8 +31,6 @@ public sealed record AuthCommand(JwtToken? Token = null) : ICommandRequest<AuthC
 internal sealed class AuthRequestHandler(ISyncLocalStorageService localStorage, IAccountAPI account)
     : ICommandRequestHandler<AuthCommand, AuthCommandResult>
 {
-    const string LocalStorageKey = "auth";
-
     public async Task<AuthCommandResult> Handle(
         AuthCommand command,
         CancellationToken cancellationToken
@@ -40,7 +38,7 @@ internal sealed class AuthRequestHandler(ISyncLocalStorageService localStorage, 
     {
         if (command.Token is null)
         {
-            var state = localStorage.GetItem<AuthState>(LocalStorageKey);
+            var state = localStorage.GetItem<AuthState>(AuthTokenProvider.LocalStorageKey);
             if (state is null)
             {
                 return AuthCommandResult.Failed;
@@ -52,20 +50,31 @@ internal sealed class AuthRequestHandler(ISyncLocalStorageService localStorage, 
                     await account.RefreshTokenAsync(new(state.RefreshToken), cancellationToken)
                     ?? throw new ResponseNullOrEmptyException();
 
-                localStorage.SetItem(LocalStorageKey, response.Content);
+                localStorage.SetItem(
+                    AuthTokenProvider.LocalStorageKey,
+                    AuthState.FromJwtToken(response.Content)
+                );
                 return new AuthCommandResult(response.Content.AccessToken, false);
             }
             return new AuthCommandResult(state.AccessToken, false);
         }
 
-        localStorage.SetItem(LocalStorageKey, new AuthState(command.Token.Value));
+        localStorage.SetItem(
+            AuthTokenProvider.LocalStorageKey,
+            AuthState.FromJwtToken(command.Token.Value)
+        );
         return new AuthCommandResult(command.Token.Value.AccessToken, true);
     }
 }
 
 internal sealed record class AuthState(string AccessToken, string RefreshToken, DateTime ExpiresAt)
 {
-    public AuthState(JwtToken token)
-        : this(token.AccessToken, token.RefreshToken, DateTime.UtcNow.AddSeconds(token.ExpireIn))
-    { }
+    public static AuthState FromJwtToken(JwtToken token)
+    {
+        return new(
+            token.AccessToken,
+            token.RefreshToken,
+            DateTime.UtcNow.AddSeconds(token.ExpireIn)
+        );
+    }
 };
