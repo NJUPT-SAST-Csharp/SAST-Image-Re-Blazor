@@ -26,11 +26,13 @@ internal sealed class LoginCommandValidator : AbstractValidator<LoginCommand>
     public LoginCommandValidator(II18nText i18n)
     {
         RuleFor(x => x.Username)
+            .NotEmpty()
             .Length(2, 16)
             .Must(x => x.IsValid())
             .WithMessage(i18n.T("Username can contain only digits, letters, and underscores"));
 
         RuleFor(x => x.Password)
+            .NotEmpty()
             .Length(6, 20)
             .Must(x => x.IsValid())
             .WithMessage(i18n.T("Password can contain only digits, letters, and underscores"));

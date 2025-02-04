@@ -57,6 +57,14 @@ file sealed class AuthenticatedHttpClientHandler(IAuthTokenProvider auth) : Http
         CancellationToken cancellationToken
     )
     {
+        if (
+            request.RequestUri!.AbsoluteUri.Contains(
+                "/account/refresh",
+                StringComparison.InvariantCultureIgnoreCase
+            )
+        )
+            return await base.SendAsync(request, cancellationToken);
+
         string? token = await auth.GetAsync();
 
         if (token is not null)

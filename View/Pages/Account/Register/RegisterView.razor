@@ -3,30 +3,22 @@
 @using FluentValidation.Results
 
 
-@* <div class="frame">
+<div class="frame">
     <MCard MaxWidth="500" MinWidth="320" Loading="loading">
         <ProgressContent>
             <MProgressLinear Color="deep-purple" Height="10" Indeterminate />
         </ProgressContent>
         <ChildContent>
-            <MForm EnableI18n OnValidSubmit="Submit" Disabled="loading" Model="Request">
+            <MForm EnableI18n OnValidSubmit="Submit" Disabled="loading" Model="command" ValidateOn="ValidateOn.Input">
                 <MCardTitle>@I18n.T("Register")</MCardTitle>
                 <MCardText>
-                    <MTextField Required Counter="16" maxlength="16" Rules="Request.UsernameValidators" ValidateOnBlur
-                        Label="@I18n.T("username")" @bind-Value="Request.Username"
-                        OnChange="(string _) => ClearUsernameDuplicatedError()"
-                        OnKeyUp="(KeyboardEventArgs _) => ClearUsernameDuplicatedError()" Disabled="isUsernameDisabled"
-                        ErrorMessages="usernameValidationMessage" @ref="_usernameTextField">
-                        <AppendOuterContent>
-                            <MIcon Color="@iconColor" Disabled="isUsernameDisabled || isIconDisabled"
-                                OnClick="CheckUsername">mdi-timeline-check</MIcon>
-                        </AppendOuterContent>
+                    <MTextField Required Counter="16" maxlength="16" ValidateOnBlur Label="@I18n.T("username")"
+                        @bind-Value="command.Username">
                     </MTextField>
-                    <MTextField Required Counter="20" maxlength="20" Rules="Request.PasswordValidators" ValidateOnBlur
-                        Label="@I18n.T("password")" @bind-Value="Request.Password" Type="password" />
-                    <MTextField Filled Required Counter="6" maxlength="6" Rules="Request.CodeValidators" ValidateOnBlur
-                        Label="@I18n.T("registration_code")" @bind-Value="code"
-                        OnInput="@((string s) => OnCodeInput(s))">
+                    <MTextField Required Counter="20" maxlength="20" ValidateOnBlur Label="@I18n.T("password")"
+                        @bind-Value="command.Password" Type="password" />
+                    <MTextField Filled Required Counter="6" maxlength="6" ValidateOnBlur
+                        Label="@I18n.T("Registration Code")" @bind-Value="command.Code">
                         <AppendContent>
                             <MTooltip Bottom>
                                 <ActivatorContent Context="activatorContext">
@@ -35,7 +27,7 @@
                                     </MIcon>
                                 </ActivatorContent>
                                 <ChildContent>
-                                    @I18n.T("registration_code_tooltip")
+                                    @I18n.T("Please contact admin to get the Registration Code")
                                 </ChildContent>
                             </MTooltip>
                         </AppendContent>
@@ -61,4 +53,4 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }
-</style> *@
+</style>

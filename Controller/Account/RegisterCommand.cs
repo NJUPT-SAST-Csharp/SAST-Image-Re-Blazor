@@ -4,6 +4,7 @@ using System.Net;
 using System.Security.Claims;
 using Controller.Exceptions;
 using Controller.Shared;
+using FluentValidation;
 using Model.Account;
 
 namespace Controller.Account;
@@ -15,9 +16,29 @@ public sealed class RegisterCommand : ICommandRequest<RegisterCommandResult>
 {
     public string Username { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
-    public int Code { get; set; }
+    public string Code { get; set; } = string.Empty;
 
-    internal RegisterRequest ToRequest() => new(Username, Password, Code);
+    internal RegisterRequest ToRequest() => new(Username, Password, int.Parse(Code));
+}
+
+internal sealed class RegisterCommandValidator : AbstractValidator<RegisterCommand>
+{
+    public RegisterCommandValidator(II18nText i18n, IQuerySender sender)
+    {
+        RuleFor(x => x.Password).NotEmpty().Length(6, 20);
+        RuleFor(x => x.Username)
+            .NotEmpty()
+            .Length(2, 16)
+            .MustAsync(
+                async (command, x, context) =>
+                    (await sender.QueryAsync(new UsernameCheckQuery(x))).IsSuccessful
+            );
+        RuleFor(x => x.Code)
+            .NotEmpty()
+            .Length(6)
+            .Must(x => int.TryParse(x, out _))
+            .WithMessage(i18n.T("Registration Code invalid"));
+    }
 }
 
 internal sealed class RegisterCommandHandler(IAccountAPI api, ICommandSender sender)
