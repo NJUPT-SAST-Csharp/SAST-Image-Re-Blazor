@@ -1,0 +1,12 @@
+﻿@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; } = null!;
+
+    protected override void OnInitialized()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+
+    protected override bool ShouldRender() => false;
+
+}

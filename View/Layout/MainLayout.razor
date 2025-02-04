@@ -1,3 +1,25 @@
 ﻿@inherits LayoutComponentBase
 
-@Body
+<MApp>
+    <MNavigationDrawer App @bind-Value="drawer">
+
+    </MNavigationDrawer>
+
+
+    <MAppBar App HideOnScroll ScrollTarget="#main-content">
+        <MAppBarNavIcon @onclick="() => drawer = !drawer" />
+    </MAppBar>
+
+    <MMain>
+        <MContainer Fluid Id="main-content">
+            @Body
+        </MContainer>
+    </MMain>
+
+</MApp>
+
+
+@code{
+    
+    private bool? drawer;
+}

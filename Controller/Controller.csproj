@@ -8,6 +8,9 @@
 
     <ItemGroup>
         <PackageReference Include="MediatR" Version="12.4.1" />
+        <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+		<PackageReference Include="Blazored.SessionStorage" Version="2.4.0" />
+		<PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.3.1" />
     </ItemGroup>
 
     <ItemGroup>
