@@ -3,6 +3,7 @@ using Controller.Shared;
 using Masa.Blazor;
 using Masa.Blazor.Components.Form;
 using Microsoft.AspNetCore.Components;
+using View.Misc;
 
 namespace View.Pages.Account.Register;
 
@@ -21,7 +22,7 @@ public sealed partial class RegisterView
     public IQuerySender QuerySender { get; set; } = null!;
 
     private readonly RegisterCommand command = new();
-    private bool loading = false;
+    private readonly AutoRestoredState<bool> loading = false;
 
     private MForm form = new();
 
@@ -34,7 +35,7 @@ public sealed partial class RegisterView
 
     private async Task Submit()
     {
-        loading = true;
+        using var _ = loading.CreateScope(true);
 
         if (await Check() == false)
         {
@@ -48,7 +49,6 @@ public sealed partial class RegisterView
                 ]
             );
 
-            loading = false;
             return;
         }
 
@@ -58,7 +58,5 @@ public sealed partial class RegisterView
         {
             // TODO
         }
-
-        loading = false;
     }
 }
