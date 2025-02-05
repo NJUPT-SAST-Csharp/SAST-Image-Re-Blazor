@@ -36,7 +36,7 @@ internal sealed class AuthRequestHandler(
         CancellationToken cancellationToken
     )
     {
-        if (command.Token is null)
+        if (command.Token is null || string.IsNullOrWhiteSpace(command.Token.Value.AccessToken))
         {
             var state = await localStorage.GetItemAsync<AuthState>(
                 AuthTokenProvider.LocalStorageKey,
@@ -55,15 +55,20 @@ internal sealed class AuthRequestHandler(
                         async task =>
                         {
                             var result = await task;
-                            if (result.IsSuccessful)
+                            if (
+                                result.IsSuccessful == false
+                                || string.IsNullOrWhiteSpace(result.Content.AccessToken)
+                            )
                             {
-                                var state = AuthState.FromJwtToken(result.Content);
-                                await localStorage.SetItemAsync(
-                                    AuthTokenProvider.LocalStorageKey,
-                                    state
-                                );
-                                notifier.Notify();
+                                return;
                             }
+
+                            var state = AuthState.FromJwtToken(result.Content);
+                            await localStorage.SetItemAsync(
+                                AuthTokenProvider.LocalStorageKey,
+                                state
+                            );
+                            notifier.Notify();
                         },
                         cancellationToken
                     );

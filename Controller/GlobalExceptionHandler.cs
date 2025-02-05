@@ -1,4 +1,3 @@
-using System;
 using Controller.Notifiers;
 using Controller.Shared;
 using MediatR;
@@ -7,7 +6,7 @@ using MediatR.Pipeline;
 namespace Controller;
 
 public sealed class GlobalExceptionHandler<TRequest, TResponse, TException>(
-    IRequestExceptionNotifier notify
+    IRequestExceptionNotifier notifier
 ) : IRequestExceptionHandler<TRequest, TResponse, TException>
     where TRequest : IBaseRequest
     where TResponse : IResult, new()
@@ -22,11 +21,11 @@ public sealed class GlobalExceptionHandler<TRequest, TResponse, TException>(
     {
         if (exception is HttpRequestException)
         {
-            notify.Notify("Network error, please check your connection and try again");
+            notifier.Notify("Network error, please check your connection and try again");
         }
         else
         {
-            notify.Notify(exception.Message);
+            notifier.Notify(exception.Message);
         }
         state.SetHandled(new() { IsSuccessful = false });
         return Task.CompletedTask;
