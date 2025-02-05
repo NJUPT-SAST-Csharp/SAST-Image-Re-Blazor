@@ -1,12 +1,8 @@
-using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using Controller.Exceptions;
 using Controller.Shared;
 using FluentValidation;
 using Model.Account;
-using Refit;
 
 namespace Controller.Account;
 
@@ -39,20 +35,21 @@ internal sealed class LoginCommandValidator : AbstractValidator<LoginCommand>
     }
 }
 
-internal sealed class LoginCommandHandler(IAccountAPI account, ICommandSender sender)
-    : ICommandRequestHandler<LoginCommand, LoginCommandResult>
+internal sealed class LoginCommandHandler(
+    IAccountApi account,
+    ICommandSender sender,
+    II18nText i18n
+) : ICommandRequestHandler<LoginCommand, LoginCommandResult>
 {
     public async Task<LoginCommandResult> Handle(
         LoginCommand command,
         CancellationToken cancellationToken
     )
     {
-        var loginResult =
-            await account.LoginAsync(command.ToRequest(), cancellationToken)
-            ?? throw new ResponseNullOrEmptyException();
+        var loginResult = await account.LoginAsync(command.ToRequest(), cancellationToken);
 
         if (loginResult.IsSuccessful == false)
-            throw new RequestErrorCodeException("Username or Password is incorrect");
+            throw new RequestErrorCodeException(i18n.T("Username or Password is incorrect"));
 
         var authResult = await sender.CommandAsync(new AuthCommand(loginResult.Content));
 

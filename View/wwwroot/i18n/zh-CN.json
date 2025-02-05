@@ -6,19 +6,24 @@
   "Logout": "登出",
   "Are U Sure To Logout?": "确定要登出吗？",
   "Login": "登录",
-  "Username or Password is incorrect": "用户名或密码不正确 qwq",
+  "Register": "注册",
   "Username": "用户名",
+  "Password": "密码",
+  "Username or Password is incorrect": "用户名或密码不正确 qwq",
   "Username length should be 2 - 16": "用户名长度为2 - 16",
   "That username has been occupied": "该用户名已经被使用",
-  "Username can contain only digits, letters, and underscores": "用户名只能包含数字、字母、下划线",
-  "Password": "密码",
   "Password length should be 6 - 20": "密码长度为6 - 20",
+  "Username can contain only digits, letters, and underscores": "用户名只能包含数字、字母、下划线",
   "Password can contain only digits, letters, and underscores": "密码只能包含数字、字母、下划线。",
   "Registration Code": "注册码",
   "Registration Code invalid": "无效的注册码",
   "Please contact admin to get the Registration Code": "请联系管理员获取注册码 owo",
-  "Register": "注册",
-  "Register failed": "注册失败 qaq",
   "Images": "图片",
-  "Albums": "相册"
+  "Albums": "相册",
+
+  "Success": "成功",
+  "Failed": "失败",
+
+  "Avatar size should be less than 3MB": "头像大小应小于3MB",
+  "Header size should be less than 10MB": "主页图片大小应小于10MB","
 }

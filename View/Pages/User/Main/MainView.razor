@@ -1,0 +1,44 @@
+﻿@page "/user/{id:long}"
+@attribute [Authorize]
+
+<PageTitle>SastImg - @username</PageTitle>
+
+<MainHeader Id="Id" class="header" />
+<MainAvatar Id="Id" class="avatar" />
+
+<MTabs>
+    <MTab>
+        <MIcon>mdi-image-outline</MIcon>
+        @I18n.T("images", false, "Images")
+    </MTab>
+    <MTab>
+        <MIcon>mdi-image-album</MIcon>
+        @I18n.T("albums", false, defaultValue: "Albums")
+    </MTab>
+
+    <MTabItem>
+        <div style="height: 20px;"></div>
+        <ImageList Images="images" />
+    </MTabItem>
+
+    <MTabItem>
+        <div style="height: 20px;"></div>
+        <AlbumList Albums="albums" />
+    </MTabItem>
+
+</MTabs>
+
+
+<style>
+    .header {
+        position: relative;
+        margin-bottom: 80px;
+    }
+
+    .avatar {
+        top: 15vh;
+        left: 50%;
+        transform: translateX(-50%);
+        position: absolute;
+    }
+</style>

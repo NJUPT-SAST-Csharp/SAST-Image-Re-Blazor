@@ -25,7 +25,7 @@ builder
 
 builder.Services.AddMediatRControllers().AddControllerLayerI18nText<I18nTextAdapter>();
 builder.Services.AddHttpClients("http://localhost:5265/api");
-builder.Services.AddSnackbarsService().AddRequestExceptionNotify();
+builder.Services.AddSnackbarsService().AddRequestNotifiers();
 
 await builder
     .Services.AddMasaBlazor()

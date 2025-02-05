@@ -1,0 +1,38 @@
+﻿
+<div @attributes="InputAttributes">
+    @if (authState.GetId() == Id)
+    {
+        <InputFile id="file" style="display: none;" OnChange="Upload" accept="image/*" />
+        <label for="file" class="editable-avatar">
+            <MAvatar Size="160" Class="avatar-circle">
+                <MImage Src="@UserProfileSources.Avatar(Id)" />
+            </MAvatar>
+        </label>
+    }
+    else
+    {
+        <MAvatar Size="160">
+            <MImage Src="@UserProfileSources.Avatar(Id)" />
+        </MAvatar>
+    }
+</div>
+
+<style>
+    .editable-avatar {
+        transition: all 0.3s;
+    }
+
+    .editable-avatar:hover {
+        transform: scale(1.05);
+    }
+
+    .avatar-circle {
+        cursor: pointer;
+        transition: all 0.3s;
+        border-radius: 50%;
+    }
+
+    .avatar-circle:hover {
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    }
+</style>

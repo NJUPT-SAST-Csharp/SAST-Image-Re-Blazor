@@ -33,7 +33,7 @@ internal sealed class RegisterCommandValidator : AbstractValidator<RegisterComma
     }
 }
 
-internal sealed class RegisterCommandHandler(IAccountAPI api, ICommandSender sender)
+internal sealed class RegisterCommandHandler(IAccountApi api, ICommandSender sender, II18nText i18n)
     : ICommandRequestHandler<RegisterCommand, RegisterCommandResult>
 {
     public async Task<RegisterCommandResult> Handle(
@@ -41,15 +41,13 @@ internal sealed class RegisterCommandHandler(IAccountAPI api, ICommandSender sen
         CancellationToken cancellationToken
     )
     {
-        var registerResult =
-            await api.RegisterAsync(command.ToRequest(), cancellationToken)
-            ?? throw new ResponseNullOrEmptyException();
+        var registerResult = await api.RegisterAsync(command.ToRequest(), cancellationToken);
 
         if (registerResult.StatusCode == HttpStatusCode.Conflict)
-            throw new RequestErrorCodeException("That username has been occupied");
+            throw new RequestErrorCodeException(i18n.T("That username has been occupied"));
 
         if (registerResult.StatusCode == HttpStatusCode.BadRequest)
-            throw new RequestErrorCodeException("Register failed");
+            throw new RequestErrorCodeException(i18n.T("Failed"));
 
         var authResult = await sender.CommandAsync(new AuthCommand(registerResult.Content));
         return new RegisterCommandResult(authResult.User);

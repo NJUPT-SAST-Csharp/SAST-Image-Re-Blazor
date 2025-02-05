@@ -1,5 +1,3 @@
-using System;
-
 namespace Controller.Shared;
 
 public interface IResult

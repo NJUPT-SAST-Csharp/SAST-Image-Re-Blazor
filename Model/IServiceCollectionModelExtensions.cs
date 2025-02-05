@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.DependencyInjection;
+using Model.User;
 using Refit;
 
 [assembly: InternalsVisibleTo("Controller")]
@@ -26,10 +27,12 @@ public static class IServiceCollectionModelExtensions
         string baseAddress
     )
     {
+        UserProfileSources.BaseAddress = baseAddress;
+
         var types = typeof(IServiceCollectionModelExtensions).Assembly.GetTypes();
         types = types
             .Where(t => t.IsInterface)
-            .Where(t => t.Namespace is not null && t.Namespace.Contains("Model"))
+            .Where(t => t.Namespace is not null && t.Namespace.Contains(nameof(Model)))
             .Where(t => t.Name.EndsWith("API", StringComparison.InvariantCultureIgnoreCase))
             .ToArray();
 

@@ -27,7 +27,7 @@ public sealed record AuthCommand(JwtToken? Token = null) : ICommandRequest<AuthC
 
 internal sealed class AuthRequestHandler(
     ILocalStorageService localStorage,
-    IAccountAPI account,
+    IAccountApi account,
     IAuthStateChangedNotifier notifier
 ) : ICommandRequestHandler<AuthCommand, AuthCommandResult>
 {

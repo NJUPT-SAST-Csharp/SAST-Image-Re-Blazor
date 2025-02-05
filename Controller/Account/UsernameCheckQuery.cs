@@ -1,6 +1,3 @@
-using System;
-using System.Net;
-using Controller.Exceptions;
 using Controller.Shared;
 using Model.Account;
 
@@ -11,7 +8,7 @@ public readonly record struct UsernameCheckQueryResult(bool IsSuccessful) : IRes
 public readonly record struct UsernameCheckQuery(string Username)
     : IQueryRequest<UsernameCheckQueryResult>;
 
-internal sealed class UsernameCheckQueryHandler(IAccountAPI api)
+internal sealed class UsernameCheckQueryHandler(IAccountApi api)
     : IQueryRequestHandler<UsernameCheckQuery, UsernameCheckQueryResult>
 {
     public async Task<UsernameCheckQueryResult> Handle(
@@ -19,9 +16,7 @@ internal sealed class UsernameCheckQueryHandler(IAccountAPI api)
         CancellationToken cancellationToken
     )
     {
-        var response =
-            await api.CheckUsernameAsync(query.Username, cancellationToken)
-            ?? throw new ResponseNullOrEmptyException();
+        var response = await api.CheckUsernameAsync(query.Username, cancellationToken);
 
         return new UsernameCheckQueryResult(response.Content);
     }
