@@ -1,6 +1,6 @@
 ﻿
 <div @attributes="InputAttributes">
-    @if (authState.GetId() == Id)
+    @if (Authenticator.Id == Id)
     {
         <InputFile id="file" style="display: none;" OnChange="Upload" accept="image/*" />
         <label for="file" class="editable-avatar">

@@ -2,7 +2,6 @@
 using Controller.Shared;
 using Controller.User;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Forms;
 using Model.User;
 using View.Misc;
@@ -29,13 +28,6 @@ public sealed partial class MainAvatar
     public string Avatar => UserProfileSources.Avatar(Id) + $"?t={DateTime.UtcNow.Ticks}";
 
     private readonly AutoRestoredState<bool> loading = false;
-    private AuthenticationState authState = null!;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var state = await Authenticator.GetAuthenticationStateAsync();
-        authState = state;
-    }
 
     private async Task Upload(InputFileChangeEventArgs e)
     {

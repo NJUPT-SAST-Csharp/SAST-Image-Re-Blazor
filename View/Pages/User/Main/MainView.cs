@@ -17,6 +17,9 @@ public sealed partial class MainView
     [Inject]
     public IQuerySender QuerySender { get; set; } = null!;
 
+    [Inject]
+    public NavigationManager Nav { get; set; } = null!;
+
     private string username = string.Empty;
     private string biography = string.Empty;
 
@@ -31,6 +34,10 @@ public sealed partial class MainView
         {
             username = response.Username;
             biography = response.Biography;
+        }
+        else
+        {
+            Nav.NavigateTo("/404", true);
         }
     }
 }
