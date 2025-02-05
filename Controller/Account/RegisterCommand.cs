@@ -1,5 +1,3 @@
-using System;
-using System.Data;
 using System.Net;
 using System.Security.Claims;
 using Controller.Exceptions;
@@ -26,13 +24,7 @@ internal sealed class RegisterCommandValidator : AbstractValidator<RegisterComma
     public RegisterCommandValidator(II18nText i18n, IQuerySender sender)
     {
         RuleFor(x => x.Password).NotEmpty().Length(6, 20);
-        RuleFor(x => x.Username)
-            .NotEmpty()
-            .Length(2, 16)
-            .MustAsync(
-                async (command, x, context) =>
-                    (await sender.QueryAsync(new UsernameCheckQuery(x))).IsSuccessful
-            );
+        RuleFor(x => x.Username).NotEmpty().Length(2, 16);
         RuleFor(x => x.Code)
             .NotEmpty()
             .Length(6)

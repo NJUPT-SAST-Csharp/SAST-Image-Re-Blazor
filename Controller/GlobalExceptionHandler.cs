@@ -1,4 +1,5 @@
 using System;
+using Controller.Notifiers;
 using Controller.Shared;
 using MediatR;
 using MediatR.Pipeline;
@@ -6,7 +7,7 @@ using MediatR.Pipeline;
 namespace Controller;
 
 public sealed class GlobalExceptionHandler<TRequest, TResponse, TException>(
-    IRequestExceptionNotify notify
+    IRequestExceptionNotifier notify
 ) : IRequestExceptionHandler<TRequest, TResponse, TException>
     where TRequest : IBaseRequest
     where TResponse : IResult, new()

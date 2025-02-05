@@ -9,16 +9,16 @@
             <MProgressLinear Color="deep-purple" Height="10" Indeterminate />
         </ProgressContent>
         <ChildContent>
-            <MForm EnableI18n OnValidSubmit="Submit" Disabled="loading" Model="command" ValidateOn="ValidateOn.Input">
+            <MForm @ref="form" EnableI18n OnValidSubmit="Submit" Disabled="loading" Model="command" ValidateOn="ValidateOn.Blur">
                 <MCardTitle>@I18n.T("Register")</MCardTitle>
                 <MCardText>
-                    <MTextField Required Counter="16" maxlength="16" ValidateOnBlur Label="@I18n.T("username")"
+                    <MTextField Required Counter="16" maxlength="16" Label="@I18n.T("Username")"
                         @bind-Value="command.Username">
                     </MTextField>
-                    <MTextField Required Counter="20" maxlength="20" ValidateOnBlur Label="@I18n.T("password")"
+                    <MTextField Required Counter="20" maxlength="20" Label="@I18n.T("Password")"
                         @bind-Value="command.Password" Type="password" />
-                    <MTextField Filled Required Counter="6" maxlength="6" ValidateOnBlur
-                        Label="@I18n.T("Registration Code")" @bind-Value="command.Code">
+                    <MTextField Required Counter="6" maxlength="6" Label="@I18n.T("Registration Code")"
+                        @bind-Value="command.Code">
                         <AppendContent>
                             <MTooltip Bottom>
                                 <ActivatorContent Context="activatorContext">

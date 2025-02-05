@@ -8,13 +8,13 @@
             <MProgressLinear Color="deep-purple" Height="10" Indeterminate />
         </ProgressContent>
         <ChildContent>
-            <MForm Disabled="@loading" OnValidSubmit="Submit" EnableI18n Model="loginCommand">
+            <MForm Disabled="@loading" OnValidSubmit="Submit" EnableI18n Model="command" ValidateOn="ValidateOn.Blur">
                 <MCardTitle>@I18n.T("Login")</MCardTitle>
                 <MCardText>
-                    <MTextField Required Counter="16" maxlength="16" ValidateOnBlur Label="@I18n.T("Username")"
-                        @bind-Value="loginCommand.Username" />
-                    <MTextField Required Counter="20" maxlength="20" ValidateOnBlur Label="@I18n.T("Password")"
-                        @bind-Value="loginCommand.Password" Type="password" />
+                    <MTextField Required Counter="16" maxlength="16" Label="@I18n.T("Username")"
+                        @bind-Value="command.Username" />
+                    <MTextField Required Counter="20" maxlength="20" Label="@I18n.T("Password")"
+                        @bind-Value="command.Password" Type="password" />
                 </MCardText>
                 <MCardActions>
                     <MButton Type="submit" Text Color="teal accent-4">

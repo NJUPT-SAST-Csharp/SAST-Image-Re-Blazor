@@ -1,13 +1,13 @@
-using Controller;
+using Controller.Notifiers;
 using Masa.Blazor;
 using Masa.Blazor.Presets;
 
 namespace View.Misc;
 
-internal sealed class RequestExceptionNotify(
+internal sealed class RequestExceptionNotifier(
     GlobalSnackbarsRef snackbars,
     IServiceProvider services
-) : IRequestExceptionNotify
+) : IRequestExceptionNotifier
 {
     public void Notify(string message)
     {
@@ -29,7 +29,7 @@ internal static class RequestExceptionNotifyExtensions
 {
     public static IServiceCollection AddRequestExceptionNotify(this IServiceCollection services)
     {
-        services.AddSingleton<IRequestExceptionNotify, RequestExceptionNotify>();
+        services.AddSingleton<IRequestExceptionNotifier, RequestExceptionNotifier>();
         return services;
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using Blazored.LocalStorage;
 using Controller.Account;
 using Controller.Shared;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -19,5 +18,10 @@ public sealed class Authenticator(ICommandSender commander) : AuthenticationStat
         }
 
         return new(new ClaimsPrincipal());
+    }
+
+    public void Refresh()
+    {
+        NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
     }
 }

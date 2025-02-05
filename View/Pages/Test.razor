@@ -1,12 +1,12 @@
 ﻿@page "/test"
-@using Controller
+@using Controller.Notifiers
 
 <button @onclick="TestMethod">Test</button>
 
 
 @code {
     [Inject]
-    public IRequestExceptionNotify Notify { get; set; } = null!;
+    public IRequestExceptionNotifier Notify { get; set; } = null!;
 
     private void TestMethod()
     {
