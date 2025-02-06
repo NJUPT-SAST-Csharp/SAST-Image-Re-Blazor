@@ -5,14 +5,14 @@
         <InputFile id="file" style="display: none;" OnChange="Upload" accept="image/*" />
         <label for="file" class="editable-avatar">
             <MAvatar Size="160" Class="avatar-circle">
-                <MImage Src="@UserProfileSources.Avatar(Id)" />
+                <MImage Src="@Avatar" />
             </MAvatar>
         </label>
     }
     else
     {
         <MAvatar Size="160">
-            <MImage Src="@UserProfileSources.Avatar(Id)" />
+            <MImage Src="@Avatar" />
         </MAvatar>
     }
 </div>

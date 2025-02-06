@@ -18,7 +18,7 @@ internal sealed class UpdateHeaderCommandHandler(IUserApi api, II18nText i18n)
             throw new InvalidRequestException(i18n.T("Header size should be less than 10MB"));
         }
 
-        StreamPart file = new(command.File, "header");
+        StreamPart file = new(command.File, "header", "image/*", "header");
 
         var result = await api.UpdateHeaderAsync(file);
 

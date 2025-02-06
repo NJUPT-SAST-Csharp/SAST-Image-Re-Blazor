@@ -33,7 +33,7 @@ public sealed partial class MainAvatar
     {
         using var _ = loading.CreateScope(true);
 
-        UpdateAvatarCommand command = new(e.File.OpenReadStream());
+        UpdateAvatarCommand command = new(e.File.OpenReadStream(long.MaxValue));
         await CommandSender.CommandAsync(command);
 
         Notifier.Notify();

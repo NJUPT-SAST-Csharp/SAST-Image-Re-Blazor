@@ -37,7 +37,7 @@ public sealed partial class MainView
         }
         else
         {
-            Nav.NavigateTo("/404", true);
+            Nav.NavigateTo("/404");
         }
     }
 }

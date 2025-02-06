@@ -18,7 +18,7 @@ internal sealed class UpdateAvatarCommandHandler(IUserApi api, II18nText i18n)
             throw new InvalidRequestException(i18n.T("Avatar size should be less than 3MB"));
         }
 
-        StreamPart file = new(command.File, "avatar");
+        StreamPart file = new(command.File, "avatar", "image/*", "avatar");
 
         var result = await api.UpdateAvatarAsync(file);
 

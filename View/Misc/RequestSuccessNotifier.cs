@@ -1,10 +1,12 @@
-﻿using Controller.Notifiers;
+﻿using Controller;
+using Controller.Notifiers;
 using Masa.Blazor;
 using Masa.Blazor.Presets;
 
 namespace View.Misc;
 
-internal sealed class RequestSuccessNotifier(GlobalSnackbarsRef snackbars) : IRequestSuccessNotifier
+internal sealed class RequestSuccessNotifier(GlobalSnackbarsRef snackbars, II18nText i18n)
+    : IRequestSuccessNotifier
 {
     public void Notify(string message)
     {
@@ -14,7 +16,7 @@ internal sealed class RequestSuccessNotifier(GlobalSnackbarsRef snackbars) : IRe
                 Type = AlertTypes.Success,
                 Content = message,
                 Closeable = true,
-                Timeout = 5000,
+                Timeout = 1000,
             }
         );
     }
@@ -25,8 +27,9 @@ internal sealed class RequestSuccessNotifier(GlobalSnackbarsRef snackbars) : IRe
             new SnackbarOptions()
             {
                 Type = AlertTypes.Success,
+                Content = i18n.T("Success"),
                 Closeable = true,
-                Timeout = 5000,
+                Timeout = 1000,
             }
         );
     }

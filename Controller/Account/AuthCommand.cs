@@ -31,6 +31,8 @@ internal sealed class AuthRequestHandler(
     IAuthStateChangedNotifier notifier
 ) : ICommandRequestHandler<AuthCommand, AuthCommandResult>
 {
+    private Task refreshTask = Task.CompletedTask;
+
     public async Task<AuthCommandResult> Handle(
         AuthCommand command,
         CancellationToken cancellationToken
@@ -47,31 +49,26 @@ internal sealed class AuthRequestHandler(
                 return AuthCommandResult.Failed;
             }
 
-            if (state.ExpiresAt < DateTime.UtcNow)
+            if (state.ExpiresAt < DateTime.UtcNow && refreshTask.IsCompleted)
             {
-                _ = account
+                refreshTask.Dispose();
+                refreshTask = account
                     .RefreshTokenAsync(new(state.RefreshToken), cancellationToken)
-                    .ContinueWith(
-                        async task =>
+                    .ContinueWith(async task =>
+                    {
+                        var result = await task;
+                        if (
+                            result.IsSuccessful == false
+                            || string.IsNullOrWhiteSpace(result.Content.AccessToken)
+                        )
                         {
-                            var result = await task;
-                            if (
-                                result.IsSuccessful == false
-                                || string.IsNullOrWhiteSpace(result.Content.AccessToken)
-                            )
-                            {
-                                return;
-                            }
+                            return;
+                        }
 
-                            var state = AuthState.FromJwtToken(result.Content);
-                            await localStorage.SetItemAsync(
-                                AuthTokenProvider.LocalStorageKey,
-                                state
-                            );
-                            notifier.Notify();
-                        },
-                        cancellationToken
-                    );
+                        var state = AuthState.FromJwtToken(result.Content);
+                        await localStorage.SetItemAsync(AuthTokenProvider.LocalStorageKey, state);
+                        notifier.Notify();
+                    });
             }
 
             return new AuthCommandResult(state.AccessToken);

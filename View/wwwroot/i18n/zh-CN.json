@@ -20,10 +20,8 @@
   "Please contact admin to get the Registration Code": "请联系管理员获取注册码 owo",
   "Images": "图片",
   "Albums": "相册",
-
   "Success": "成功",
   "Failed": "失败",
-
   "Avatar size should be less than 3MB": "头像大小应小于3MB",
-  "Header size should be less than 10MB": "主页图片大小应小于10MB","
+  "Header size should be less than 10MB": "主页图片大小应小于10MB"
 }

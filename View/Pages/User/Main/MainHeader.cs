@@ -37,7 +37,7 @@ public sealed partial class MainHeader
     {
         using var _ = loading.CreateScope(true);
 
-        UpdateHeaderCommand command = new(e.File.OpenReadStream());
+        UpdateHeaderCommand command = new(e.File.OpenReadStream(long.MaxValue));
         await CommandSender.CommandAsync(command);
 
         Notifier.Notify();

@@ -35,7 +35,7 @@ public static class IServiceCollectionControllerExtensions
     public static IServiceCollection AddControllerLayerI18nText<T>(this IServiceCollection services)
         where T : class, II18nText
     {
-        services.AddScoped<II18nText, T>();
+        services.AddSingleton<II18nText, T>();
         return services;
     }
 }
