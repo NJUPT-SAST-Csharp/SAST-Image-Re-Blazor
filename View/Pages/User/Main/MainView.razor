@@ -1,10 +1,18 @@
 ﻿@page "/user/{id:long}"
 @attribute [Authorize]
+@using View.Pages.User.Profile
 
 <PageTitle>SastImg - @username</PageTitle>
 
 <MainHeader Id="Id" class="header" />
 <MainAvatar Id="Id" class="avatar" />
+
+<ProfileUsername Value="@username" Editable="@(Id == Authenticator.Id)" class="text-center" />
+
+<p class="text-center text--secondary">
+    @*Biography*@
+</p>
+
 
 <MTabs>
     <MTab>

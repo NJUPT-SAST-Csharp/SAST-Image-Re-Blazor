@@ -1,6 +1,6 @@
 ﻿
 <div @attributes="InputAttributes">
-    @if (Authenticator.Id == Id)
+    @if (Authenticator.Id == Id && !loading)
     {
         <InputFile id="file" style="display: none;" OnChange="Upload" accept="image/*" />
         <label for="file" class="editable-avatar">
@@ -8,6 +8,12 @@
                 <MImage Src="@Avatar" />
             </MAvatar>
         </label>
+    }
+    else if(loading)
+    {
+        <MAvatar Size="160">
+            <MProgressCircular Indeterminate />
+        </MAvatar>
     }
     else
     {

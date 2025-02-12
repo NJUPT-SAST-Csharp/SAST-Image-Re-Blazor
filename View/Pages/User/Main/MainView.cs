@@ -8,9 +8,6 @@ namespace View.Pages.User.Main;
 
 public sealed partial class MainView
 {
-    [Parameter]
-    public long Id { get; set; }
-
     [Inject]
     public I18n I18n { get; set; } = null!;
 
@@ -20,9 +17,14 @@ public sealed partial class MainView
     [Inject]
     public NavigationManager Nav { get; set; } = null!;
 
+    [Inject]
+    public Authenticator Authenticator { get; set; } = null!;
+
+    [Parameter]
+    public long Id { get; set; }
+
     private string username = string.Empty;
     private string biography = string.Empty;
-
     private readonly AutoRestoredState<bool> loading = false;
 
     protected override async Task OnInitializedAsync()

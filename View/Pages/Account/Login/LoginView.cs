@@ -27,7 +27,7 @@ public sealed partial class LoginView
         var result = await CommandSender.CommandAsync(command);
         if (result.IsSuccessful)
         {
-            Nav.NavigateTo("/");
+            Nav.NavigateTo("/user" + result.User.FindFirst("id")?.Value);
         }
     }
 }

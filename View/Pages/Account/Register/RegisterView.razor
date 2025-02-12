@@ -6,7 +6,7 @@
 <div class="frame">
     <MCard MaxWidth="500" MinWidth="320" Loading="loading.Value">
         <ProgressContent>
-            <MProgressLinear Color="deep-purple" Height="10" Indeterminate />
+            <MProgressLinear Height="10" Indeterminate />
         </ProgressContent>
         <ChildContent>
             <MForm @ref="form" EnableI18n OnValidSubmit="Submit" Disabled="loading" Model="command" ValidateOn="ValidateOn.Blur">
@@ -34,10 +34,10 @@
                     </MTextField>
                 </MCardText>
                 <MCardActions>
-                    <MButton Type="submit" Text Color="teal accent-4">
+                    <MButton Type="submit" Text Color="teal accent-4" Disabled="loading">
                         <MIcon>mdi-check-outline</MIcon>
                     </MButton>
-                    <MButton Text OnClick="@(() => Nav.Replace("/login"))">
+                    <MButton Text OnClick="@(() => Nav.Replace("/login"))" Disabled="loading">
                         <MIcon>mdi-backspace-outline</MIcon>
                     </MButton>
                 </MCardActions>

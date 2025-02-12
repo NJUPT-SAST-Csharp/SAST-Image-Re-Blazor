@@ -1,0 +1,54 @@
+﻿<div @attributes="@InputAttributes">
+    
+    @if(Editable)
+    {
+        <h2 class="editable" @onclick="@(() => dialog=true)" OnClickStopPropagation>@Value</h2>
+
+        <MDialog @bind-Value="dialog" MaxWidth="500" Width="320" OnOutsideClick="Close" >
+            <ChildContent>
+                <MCard Tile Loading="loading.Value">
+                    <ProgressContent>
+                        <MProgressLinear Height="10" Indeterminate />
+                    </ProgressContent>
+                    <ChildContent>
+                        <MForm @ref="form" Disabled="loading" Model="command" EnableI18n OnValidSubmit="Submit" ValidateOn="ValidateOn.Blur">
+                            <MCardTitle>
+                                <MI18n>Edit Username</MI18n>
+                            </MCardTitle>
+                            <MCardText>
+                                <MTextField Required Autofocus Clearable Counter="16" maxlength="16"
+                                            Label="@I18n.T("Username")"
+                                            @bind-Value="command.Username" />
+                            </MCardText>
+                            <MCardActions>
+                                <MSpacer></MSpacer>
+                                <MButton Color="blue darken-1" Text OnClick="Close">
+                                    Close
+                                </MButton>
+                                <MButton Color="green darken-1" Text Type="submit" Disabled="loading">
+                                    Save
+                                </MButton>
+                            </MCardActions>
+                        </MForm>
+                    </ChildContent>
+                </MCard>
+            </ChildContent>
+        </MDialog>
+    }
+    else
+    {
+        <h2>@Value</h2>
+    }
+
+</div>
+
+<style>
+    .editable{
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+    .editable:hover{
+        transform: scale(1.02)
+    }
+</style>

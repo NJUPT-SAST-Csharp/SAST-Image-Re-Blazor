@@ -35,8 +35,6 @@ public sealed partial class MainAvatar
 
         UpdateAvatarCommand command = new(e.File.OpenReadStream(long.MaxValue));
         await CommandSender.CommandAsync(command);
-
         Notifier.Notify();
-        StateHasChanged();
     }
 }

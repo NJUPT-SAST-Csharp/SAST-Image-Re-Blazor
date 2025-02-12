@@ -21,10 +21,20 @@ public sealed class RegisterCommand : ICommandRequest<RegisterCommandResult>
 
 internal sealed class RegisterCommandValidator : AbstractValidator<RegisterCommand>
 {
-    public RegisterCommandValidator(II18nText i18n, IQuerySender sender)
+    public RegisterCommandValidator(II18nText i18n)
     {
-        RuleFor(x => x.Password).NotEmpty().Length(6, 20);
-        RuleFor(x => x.Username).NotEmpty().Length(2, 16);
+        RuleFor(x => x.Password)
+            .NotEmpty()
+            .Length(6, 20)
+            .Must(x => x.IsValid())
+            .WithMessage(i18n.T("Username can contain only digits, letters, and underscores"));
+
+        RuleFor(x => x.Username)
+            .NotEmpty()
+            .Length(2, 16)
+            .Must(x => x.IsValid())
+            .WithMessage(i18n.T("Password can contain only digits, letters, and underscores"));
+
         RuleFor(x => x.Code)
             .NotEmpty()
             .Length(6)

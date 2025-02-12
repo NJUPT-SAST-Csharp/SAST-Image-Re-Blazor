@@ -26,9 +26,9 @@ public sealed partial class RegisterView
 
     private MForm form = new();
 
-    private async Task<bool> Check()
+    private async Task<bool> Check(string value)
     {
-        UsernameCheckQuery query = new(command.Username);
+        UsernameCheckQuery query = new(value);
         var result = await QuerySender.QueryAsync(query);
         return result.IsSuccessful;
     }
@@ -37,7 +37,7 @@ public sealed partial class RegisterView
     {
         using var _ = loading.CreateScope(true);
 
-        if (await Check() == false)
+        if (await Check(command.Username) == false)
         {
             form.ParseFormValidation(
                 [
@@ -56,7 +56,7 @@ public sealed partial class RegisterView
 
         if (result.IsSuccessful)
         {
-            // TODO
+            Nav.NavigateTo("/user" + result.User.FindFirst("id")?.Value);
         }
     }
 }

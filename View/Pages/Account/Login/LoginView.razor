@@ -5,7 +5,7 @@
 <div class="frame">
     <MCard MaxWidth="500" MinWidth="320" Loading="loading.Value" Tile>
         <ProgressContent>
-            <MProgressLinear Color="deep-purple" Height="10" Indeterminate />
+            <MProgressLinear Height="10" Indeterminate />
         </ProgressContent>
         <ChildContent>
             <MForm Disabled="loading" OnValidSubmit="Submit" EnableI18n Model="command" ValidateOn="ValidateOn.Blur">
@@ -17,10 +17,10 @@
                         @bind-Value="command.Password" Type="password" />
                 </MCardText>
                 <MCardActions>
-                    <MButton Type="submit" Text Color="teal accent-4">
+                    <MButton Type="submit" Text Color="teal accent-4" Disabled="loading">
                         <MIcon>mdi-check-outline</MIcon>
                     </MButton>
-                    <MButton Text OnClick="@(() => Nav.Replace("/register"))">
+                    <MButton Text OnClick="@(() => Nav.Replace("/register"))" Disabled="loading">
                         <MIcon>mdi-account-plus-outline</MIcon>
                     </MButton>
                 </MCardActions>

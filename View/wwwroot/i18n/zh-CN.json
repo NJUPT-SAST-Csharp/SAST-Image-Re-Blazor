@@ -9,6 +9,7 @@
   "Register": "注册",
   "Username": "用户名",
   "Password": "密码",
+  "Edit Username": "编辑用户名",
   "Username or Password is incorrect": "用户名或密码不正确 qwq",
   "Username length should be 2 - 16": "用户名长度为2 - 16",
   "That username has been occupied": "该用户名已经被使用",
