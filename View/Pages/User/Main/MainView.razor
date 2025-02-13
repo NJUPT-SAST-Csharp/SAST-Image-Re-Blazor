@@ -6,20 +6,28 @@
 
 <MainHeader Id="Id" class="header" />
 <MainAvatar Id="Id" class="avatar" />
-<ProfileNickname Value="@profile.Nickname" Editable="@(Id == Authenticator.Id)" class="text-center" />
-<ProfileUsername Value="@profile.Username" Editable="@(Id == Authenticator.Id)" class="text-center" />
-<ProfileBiography Value="@profile.Biography" Editable="@(Id == Authenticator.Id)" class="text-center mt-3" />
 
-<p class="text-center text-secondary">
-    @*Biography*@
-</p>
-
+@if(profile == default)
+{
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+else
+{
+    <ProfileNickname Value="@profile.Nickname" Editable="@(Id == Authenticator.Id)" class="text-center" />
+    <ProfileUsername Value="@profile.Username" Editable="@(Id == Authenticator.Id)" class="text-center" />
+    <ProfileBiography Value="@profile.Biography" Editable="@(Id == Authenticator.Id)" class="text-center mt-3" />
+}
 
 <MTabs>
     <MTab>
         <MIcon>mdi-image-outline</MIcon>
         @I18n.T("images", false, "Images")
     </MTab>
+
     <MTab>
         <MIcon>mdi-image-album</MIcon>
         @I18n.T("albums", false, defaultValue: "Albums")

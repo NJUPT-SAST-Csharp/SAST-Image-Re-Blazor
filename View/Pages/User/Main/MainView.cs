@@ -23,7 +23,7 @@ public sealed partial class MainView
     [Parameter]
     public long Id { get; set; }
 
-    private UserProfileQueryResult profile;
+    private UserProfileQueryResult profile = default;
     private readonly AutoRestoredState<bool> loading = false;
 
     protected override async Task OnInitializedAsync()
