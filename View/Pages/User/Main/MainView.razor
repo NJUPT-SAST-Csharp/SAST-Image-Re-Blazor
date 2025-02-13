@@ -2,14 +2,15 @@
 @attribute [Authorize]
 @using View.Pages.User.Profile
 
-<PageTitle>SastImg - @username</PageTitle>
+<PageTitle>SastImg - @profile.Username</PageTitle>
 
 <MainHeader Id="Id" class="header" />
 <MainAvatar Id="Id" class="avatar" />
+<ProfileNickname Value="@profile.Nickname" Editable="@(Id == Authenticator.Id)" class="text-center" />
+<ProfileUsername Value="@profile.Username" Editable="@(Id == Authenticator.Id)" class="text-center" />
+<ProfileBiography Value="@profile.Biography" Editable="@(Id == Authenticator.Id)" class="text-center mt-3" />
 
-<ProfileUsername Value="@username" Editable="@(Id == Authenticator.Id)" class="text-center" />
-
-<p class="text-center text--secondary">
+<p class="text-center text-secondary">
     @*Biography*@
 </p>
 

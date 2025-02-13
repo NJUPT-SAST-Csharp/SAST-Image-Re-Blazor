@@ -56,7 +56,7 @@ public sealed partial class RegisterView
 
         if (result.IsSuccessful)
         {
-            Nav.NavigateTo("/user" + result.User.FindFirst("id")?.Value);
+            Nav.NavigateTo("/user/" + result.User.FindFirst("id")?.Value);
         }
     }
 }

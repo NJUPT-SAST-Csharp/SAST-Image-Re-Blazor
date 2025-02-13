@@ -38,3 +38,13 @@ public sealed class AutoRestoredState<T>(T init)
         }
     }
 }
+
+public static class AutoRestoredStateExtensions
+{
+    public static AutoRestoredState<bool>.ScopedState CreateScope(
+        this AutoRestoredState<bool> state
+    )
+    {
+        return state.CreateScope(!state.Value);
+    }
+}

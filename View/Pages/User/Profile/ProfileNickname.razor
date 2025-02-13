@@ -1,25 +1,25 @@
 ﻿<div @attributes="@InputAttributes">
-    
-    @if(Editable)
-    {
-        <span class="editable d-inline-block text-secondary" @onclick="@(() => dialog=true)" OnClickStopPropagation>@@@Value</span>
 
-        <MDialog @bind-Value="dialog" MaxWidth="500" Width="320" OnOutsideClick="Close" >
+    @if (Editable)
+    {
+        <h2 class="editable d-inline-block" @onclick="@(() => dialog=true)" OnClickStopPropagation>@Value</h2>
+
+        <MDialog @bind-Value="dialog" MaxWidth="500" Width="320" OnOutsideClick="Close">
             <ChildContent>
                 <MCard Tile Loading="loading.Value">
                     <ProgressContent>
                         <MProgressLinear Height="10" Indeterminate />
                     </ProgressContent>
                     <ChildContent>
-                        <MForm @ref="form" Disabled="loading" Model="command" EnableI18n OnValidSubmit="Submit" ValidateOn="ValidateOn.Blur">
+                        <MForm Disabled="loading" Model="command" EnableI18n OnValidSubmit="Submit" ValidateOn="ValidateOn.Blur">
                             <MCardTitle>
-                                <MI18n>Username</MI18n>
+                                <MI18n>Nickname</MI18n>
                             </MCardTitle>
                             <MCardText>
                                 <MTextField Required Autofocus Clearable Counter="16" maxlength="16"
                                             Loading="loading.Value"
-                                            Label="@I18n.T("Username")"
-                                            @bind-Value="command.Username" />
+                                            Label="@I18n.T("Nickname")"
+                                            @bind-Value="command.Nickname" />
                             </MCardText>
                             <MCardActions>
                                 <MSpacer></MSpacer>
@@ -44,12 +44,12 @@
 </div>
 
 <style>
-    .editable{
+    .editable {
         transition: all 0.3s;
         cursor: pointer;
     }
 
-    .editable:hover{
-        transform: scale(1.02)
-    }
+        .editable:hover {
+            transform: scale(1.02)
+        }
 </style>

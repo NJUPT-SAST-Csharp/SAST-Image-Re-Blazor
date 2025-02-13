@@ -13,10 +13,11 @@ public readonly record struct RegisterCommandResult(ClaimsPrincipal User, bool I
 public sealed class RegisterCommand : ICommandRequest<RegisterCommandResult>
 {
     public string Username { get; set; } = string.Empty;
+    public string Nickname { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public string Code { get; set; } = string.Empty;
 
-    internal RegisterRequest ToRequest() => new(Username, Password, int.Parse(Code));
+    internal RegisterRequest ToRequest() => new(Username, Nickname, Password, int.Parse(Code));
 }
 
 internal sealed class RegisterCommandValidator : AbstractValidator<RegisterCommand>
@@ -40,6 +41,8 @@ internal sealed class RegisterCommandValidator : AbstractValidator<RegisterComma
             .Length(6)
             .Must(x => int.TryParse(x, out _))
             .WithMessage(i18n.T("Registration Code invalid"));
+
+        RuleFor(x => x.Nickname).NotEmpty().Length(1, 16);
     }
 }
 

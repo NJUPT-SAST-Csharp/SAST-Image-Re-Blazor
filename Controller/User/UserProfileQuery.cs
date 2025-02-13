@@ -7,14 +7,16 @@ namespace Controller.User;
 public readonly record struct UserProfileQueryResult(
     long Id,
     string Username,
+    string Nickname,
     string Biography,
     bool IsSuccessful = true
 ) : IResult
 {
     internal UserProfileQueryResult(UserProfileDto dto)
-        : this(dto.Id, dto.Username, dto.Biography) { }
+        : this(dto.Id, dto.Username, dto.Nickname, dto.Biography) { }
 
-    public static UserProfileQueryResult Fail => new(0, string.Empty, string.Empty, false);
+    public static UserProfileQueryResult Fail =>
+        new(0, string.Empty, string.Empty, string.Empty, false);
 }
 
 public readonly record struct UserProfileQuery(long Id) : IQueryRequest<UserProfileQueryResult> { }

@@ -2,16 +2,16 @@
 using FluentValidation;
 using Model.Account;
 
-namespace Controller.User;
+namespace Controller.Account;
 
-public sealed class UpdateUsernameCommand : ICommandRequest<Result>
+public sealed class ResetUsernameCommand : ICommandRequest<Result>
 {
     public string Username { get; set; } = string.Empty;
 }
 
-internal sealed class UpdateUsernameCommandValidator : AbstractValidator<UpdateUsernameCommand>
+internal sealed class ResetUsernameCommandValidator : AbstractValidator<ResetUsernameCommand>
 {
-    public UpdateUsernameCommandValidator(II18nText i18n)
+    public ResetUsernameCommandValidator(II18nText i18n)
     {
         RuleFor(x => x.Username)
             .NotEmpty()
@@ -21,11 +21,11 @@ internal sealed class UpdateUsernameCommandValidator : AbstractValidator<UpdateU
     }
 }
 
-internal sealed class UpdateUsernameCommandHandler(IAccountApi api)
-    : ICommandRequestHandler<UpdateUsernameCommand, Result>
+internal sealed class ResetUsernameCommandHandler(IAccountApi api)
+    : ICommandRequestHandler<ResetUsernameCommand, Result>
 {
     public async Task<Result> Handle(
-        UpdateUsernameCommand request,
+        ResetUsernameCommand request,
         CancellationToken cancellationToken
     )
     {

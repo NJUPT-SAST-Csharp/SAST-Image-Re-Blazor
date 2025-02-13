@@ -23,8 +23,7 @@ public sealed partial class MainView
     [Parameter]
     public long Id { get; set; }
 
-    private string username = string.Empty;
-    private string biography = string.Empty;
+    private UserProfileQueryResult profile;
     private readonly AutoRestoredState<bool> loading = false;
 
     protected override async Task OnInitializedAsync()
@@ -34,8 +33,7 @@ public sealed partial class MainView
         var response = await QuerySender.QueryAsync(new UserProfileQuery(Id));
         if (response.IsSuccessful)
         {
-            username = response.Username;
-            biography = response.Biography;
+            profile = response;
         }
         else
         {

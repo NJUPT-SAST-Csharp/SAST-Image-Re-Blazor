@@ -15,10 +15,17 @@
                     <MTextField Required Counter="16" maxlength="16" Label="@I18n.T("Username")"
                         @bind-Value="command.Username">
                     </MTextField>
+
+                    <MTextField Required Counter="16" maxlength="16" Label="@I18n.T("Nickname")"
+                        @bind-Value="command.Nickname">
+                    </MTextField>
+
                     <MTextField Required Counter="20" maxlength="20" Label="@I18n.T("Password")"
                         @bind-Value="command.Password" Type="password" />
+
                     <MTextField Required Counter="6" maxlength="6" Label="@I18n.T("Registration Code")"
                         @bind-Value="command.Code">
+
                         <AppendContent>
                             <MTooltip Bottom>
                                 <ActivatorContent Context="activatorContext">
